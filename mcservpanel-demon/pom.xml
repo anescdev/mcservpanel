@@ -5,12 +5,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>es.anescdev</groupId>
-  <artifactId>mcservpanel-commons</artifactId>
+  <artifactId>mcservpanel-demon</artifactId>
   <version>0.0.1</version>
 
-  <name>mcservpanel-commons</name>
+  <name>mcservpanel-demon</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://anescdev.es</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,30 +19,26 @@
   </properties>
 
   <dependencies>
-
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.18.28</version>
+      <groupId>es.anescdev</groupId>
+      <artifactId>mcservpanel-commons</artifactId>
+      <version>0.0.1</version>
     </dependency>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.13.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
   <repositories>
     <repository>
-        <id>project.local</id>
-        <name>project</name>
-        <url>file:${project.basedir}/../.maven-repo</url>
+      <id>project.local</id>
+      <name>mcservpanel-local-repo</name>
+      <url>file:${project.basedir}/../.maven-repo</url>
     </repository>
-</repositories>
-
-
+  </repositories>
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>

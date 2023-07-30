@@ -1,4 +1,4 @@
-package es.anescdev.mcspcommons;
+package es.anescdev.mcservdemon;
 
 /**
  * Hello world!

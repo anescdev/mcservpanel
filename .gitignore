@@ -24,5 +24,13 @@ hs_err_pid*
 replay_pid*
 
 # vscode
-
 .vscode
+
+# Repository
+.maven-repo
+
+#Idea
+.idea
+
+#Target
+target
