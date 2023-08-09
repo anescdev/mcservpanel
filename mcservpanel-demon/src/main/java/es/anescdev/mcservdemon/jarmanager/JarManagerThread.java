@@ -1,7 +1,7 @@
 package es.anescdev.mcservdemon.jarmanager;
 
 import es.anescdev.mcservdemon.App;
-import es.anescdev.mcservdemon.jarmanager.domain.JarManagerRepository;
+import es.anescdev.mcservdemon.jarmanager.model.JarManagerRepository;
 import es.anescdev.mcspcommons.models.servertype.ServerType;
 
 import java.util.List;
@@ -24,9 +24,6 @@ public class JarManagerThread implements Runnable{
     }
     @Override
     public void run() {
-        List<ServerType> pendingUpdates = this.repo.checkJarUpgrade();
-        if(!pendingUpdates.isEmpty()){
-             pendingUpdates.forEach(this.repo::upgradeJar);
-        }
+
     }
 }

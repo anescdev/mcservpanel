@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  */
 public class App 
 {
+    public static final Logger LOGGER = App.createLogger(App.class);
     private static final Formatter LOG_FORMATTER = new Formatter() {
         private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("Date: dd-MM-uuuu Time: HH:mm:ss");
         @Override
