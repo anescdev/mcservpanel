@@ -50,6 +50,12 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.jcommander/jcommander -->
+    <dependency>
+      <groupId>org.jcommander</groupId>
+      <artifactId>jcommander</artifactId>
+      <version>1.83</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
