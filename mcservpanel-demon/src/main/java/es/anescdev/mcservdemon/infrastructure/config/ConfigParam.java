@@ -1,4 +1,4 @@
-package es.anescdev.config;
+package es.anescdev.mcservdemon.infrastructure.config;
 
 public enum ConfigParam {
     SERVER_JAR_FOLDER,

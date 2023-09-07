@@ -1,6 +1,7 @@
-package es.anescdev.config;
+package es.anescdev.mcservdemon.infrastructure.config.strategy;
 
-import es.anescdev.McServDemon;
+import es.anescdev.mcservdemon.McServDemon;
+import es.anescdev.mcservdemon.infrastructure.config.ConfigParam;
 import jakarta.annotation.Nonnull;
 
 import java.io.*;
@@ -8,7 +9,7 @@ import java.util.Properties;
 
 public class LocalConfigStrategy implements ConfigStrategy{
     private final Properties config;
-    protected LocalConfigStrategy() throws IOException {
+    public LocalConfigStrategy() throws IOException {
         this.config = new Properties();
         FileInputStream fis = new FileInputStream(McServDemon.CONFIG_FILE);
         this.config.load(fis);
