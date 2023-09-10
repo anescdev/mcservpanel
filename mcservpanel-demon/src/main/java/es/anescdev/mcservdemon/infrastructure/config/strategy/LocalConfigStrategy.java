@@ -15,8 +15,22 @@ public class LocalConfigStrategy implements ConfigStrategy{
         this.config.load(fis);
     }
 
-    @Override
-    public String getConfigValue(@Nonnull ConfigParam configParam) {
+    private String getConfigValue(@Nonnull ConfigParam configParam) {
         return this.config.getProperty(configParam.getPropertyName());
+    }
+
+    @Override
+    public String serverJarfolder() {
+        return this.getConfigValue(ConfigParam.INSTANCE_JAR_FOLDER);
+    }
+
+    @Override
+    public String serverDataFolder() {
+        return this.getConfigValue(ConfigParam.INSTANCE_DATA_FOLDER);
+    }
+
+    @Override
+    public String instanceName() {
+        return this.getConfigValue(ConfigParam.SERVER_NAME);
     }
 }

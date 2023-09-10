@@ -7,10 +7,11 @@ import es.anescdev.mcservdemon.infrastructure.config.generator.ConfigGenerator;
 import es.anescdev.mcservdemon.infrastructure.config.generator.LocalConfigGenerator;
 import es.anescdev.mcservdemon.infrastructure.config.strategy.ConfigStrategy;
 import es.anescdev.mcservdemon.infrastructure.config.strategy.LocalConfigStrategy;
+import io.quarkus.arc.DefaultBean;
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.QuarkusApplication;
 import io.quarkus.runtime.annotations.QuarkusMain;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +24,8 @@ public class McServDemon implements QuarkusApplication{
     public static final Path BASE_DIR = Paths.get(System.getProperty("user.home"), ".mcservdemon");
     public static final File CONFIG_FILE = new File(BASE_DIR.toFile(),"config.properties");
     ConfigGenerator configGenerator = new LocalConfigGenerator();
-    @ApplicationScoped
+    @Produces
+    @DefaultBean
     ConfigStrategy configStrategy;
     @Override
     public int run(String... args) {

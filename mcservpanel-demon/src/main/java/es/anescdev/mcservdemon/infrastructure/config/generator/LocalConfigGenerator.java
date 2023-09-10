@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Properties;
+import java.util.UUID;
 
 public class LocalConfigGenerator implements ConfigGenerator{
     @Override
@@ -28,8 +29,8 @@ public class LocalConfigGenerator implements ConfigGenerator{
     }
 
     private void setDefaultConfig(@Nonnull Properties configObject) {
-        configObject.setProperty(ConfigParam.SERVER_JAR_FOLDER.getPropertyName(), Path.of(McServDemon.BASE_DIR.toString(),"jar_files").toString());
-        configObject.setProperty(ConfigParam.SERVER_DATA_FOLDER.getPropertyName(), Path.of(McServDemon.BASE_DIR.toString(),"server_data").toString());
-        configObject.setProperty(ConfigParam.ALLOW_REMOTE_MODULE_INSTALL.getPropertyName(), String.valueOf(false));
+        configObject.setProperty(ConfigParam.INSTANCE_JAR_FOLDER.getPropertyName(), Path.of(McServDemon.BASE_DIR.toString(),"jar_files").toString());
+        configObject.setProperty(ConfigParam.INSTANCE_DATA_FOLDER.getPropertyName(), Path.of(McServDemon.BASE_DIR.toString(),"server_data").toString());
+        configObject.setProperty(ConfigParam.SERVER_NAME.getPropertyName(), String.format("instance-%s", UUID.randomUUID()));
     }
 }
