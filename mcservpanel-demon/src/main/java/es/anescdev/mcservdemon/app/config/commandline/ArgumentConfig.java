@@ -1,4 +1,4 @@
-package es.anescdev.mcservdemon.infrastructure.config.commandline;
+package es.anescdev.mcservdemon.app.config.commandline;
 
 import com.beust.jcommander.Parameter;
 

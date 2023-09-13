@@ -1,7 +1,7 @@
-package es.anescdev.mcservdemon.rest.endpoints;
+package es.anescdev.mcservdemon.app.rest.endpoints;
 
-import es.anescdev.mcservdemon.infrastructure.config.strategy.ConfigStrategy;
-import es.anescdev.mcservdemon.rest.dto.ServerInfoDto;
+import es.anescdev.mcservdemon.app.config.strategy.ConfigStrategy;
+import es.anescdev.mcservdemon.app.rest.dto.ServerInfoDto;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

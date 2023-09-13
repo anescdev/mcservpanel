@@ -2,11 +2,11 @@ package es.anescdev.mcservdemon;
 
 
 import com.beust.jcommander.JCommander;
-import es.anescdev.mcservdemon.infrastructure.config.commandline.ArgumentConfig;
-import es.anescdev.mcservdemon.infrastructure.config.generator.ConfigGenerator;
-import es.anescdev.mcservdemon.infrastructure.config.generator.LocalConfigGenerator;
-import es.anescdev.mcservdemon.infrastructure.config.strategy.ConfigStrategy;
-import es.anescdev.mcservdemon.infrastructure.config.strategy.LocalConfigStrategy;
+import es.anescdev.mcservdemon.app.config.commandline.ArgumentConfig;
+import es.anescdev.mcservdemon.app.config.generator.ConfigGenerator;
+import es.anescdev.mcservdemon.app.config.generator.LocalConfigGenerator;
+import es.anescdev.mcservdemon.app.config.strategy.ConfigStrategy;
+import es.anescdev.mcservdemon.app.config.strategy.LocalConfigStrategy;
 import io.quarkus.arc.DefaultBean;
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.QuarkusApplication;

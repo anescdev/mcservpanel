@@ -1,4 +1,4 @@
-package es.anescdev.mcservdemon.infrastructure.config.strategy;
+package es.anescdev.mcservdemon.app.config.strategy;
 
 public interface ConfigStrategy {
     String serverJarfolder();

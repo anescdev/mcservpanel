@@ -1,7 +1,7 @@
-package es.anescdev.mcservdemon.infrastructure.config.strategy;
+package es.anescdev.mcservdemon.app.config.strategy;
 
 import es.anescdev.mcservdemon.McServDemon;
-import es.anescdev.mcservdemon.infrastructure.config.ConfigParam;
+import es.anescdev.mcservdemon.app.config.ConfigParam;
 import jakarta.annotation.Nonnull;
 
 import java.io.*;
