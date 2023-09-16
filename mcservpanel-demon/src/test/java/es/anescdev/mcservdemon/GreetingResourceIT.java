@@ -1,4 +1,4 @@
-package es.anescdev;
+package es.anescdev.mcservdemon;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
