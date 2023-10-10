@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Properties;
 import java.util.UUID;
-
+// TODO: Cambiar el generator para que funciones con la nueva config que se está creando
 public class LocalConfigGenerator implements ConfigGenerator{
     @Override
     public boolean generateConfig() {
