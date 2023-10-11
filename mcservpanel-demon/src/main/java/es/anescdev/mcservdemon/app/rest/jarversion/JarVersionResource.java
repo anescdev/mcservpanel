@@ -1,48 +1,55 @@
 package es.anescdev.mcservdemon.app.rest.jarversion;
 
-import es.anescdev.mcservdemon.app.rest.jarversion.dto.RJarVersionDTO;
+import es.anescdev.mcservdemon.app.rest.validation.Validator;
+import es.anescdev.mcservdemon.app.rest.jarversion.dto.JarVersionDTO;
 import es.anescdev.mcservdemon.context.jarversion.adapter.JarVersionAdapter;
 import es.anescdev.mcservdemon.context.jarversion.domain.port.JarVersionPort;
 
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.Optional;
 
 @Produces
 @Path("/version")
 public class JarVersionResource {
     JarVersionPort jarVersionPort = JarVersionAdapter.getInstance();
-
+    @Inject
+    Validator<JarVersionDTO> validator;
     @GET
-    public List<RJarVersionDTO> getAllVersions(
-            @QueryParam("version") String version,
-            @QueryParam("tag") String tag){
-        //TODO: Falta validación
-        if(version != null && tag != null)
-            return jarVersionPort.getJarVersions(tag, version)
+    public Response getAllVersions(@BeanParam JarVersionDTO params){
+        Optional<Response> validation = validator.validate(params);
+        if(validation.isPresent())
+            return validation.get();
+        List<JarVersionDTO> resContent;
+        if(params.getVersion() != null && params.getTag() != null)
+            resContent = jarVersionPort.getJarVersions(params.getTag(), params.getVersion())
                     .stream()
                     .map(rJarVersion ->
-                            new RJarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
+                            new JarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
                     .toList();
-        if(version != null)
-            return jarVersionPort.getJarVersionsByVersion(version)
+        else if(params.getVersion() != null)
+            resContent = jarVersionPort.getJarVersionsByVersion(params.getVersion())
                     .stream()
                     .map(rJarVersion ->
-                            new RJarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
+                            new JarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
                     .toList();
-        if(tag != null)
-            return jarVersionPort.getJarVersionsByTag(tag)
+        else if(params.getTag() != null)
+            resContent = jarVersionPort.getJarVersionsByTag(params.getTag())
                     .stream()
                     .map(rJarVersion ->
-                            new RJarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
+                            new JarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
                     .toList();
-        return jarVersionPort.getJarVersions()
-                .stream()
-                .map(rJarVersion ->
-                        new RJarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
-                .toList();
+        else
+            resContent =  jarVersionPort.getJarVersions()
+                    .stream()
+                    .map(rJarVersion ->
+                            new JarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
+                    .toList();
+        if(resContent.isEmpty())
+            return Response.status(404).build();
+        return Response.ok(resContent).build();
     }
 }
