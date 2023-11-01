@@ -1,7 +1,7 @@
 package es.anescdev.mcservdemon.context.jarversion.adapter;
 
 import es.anescdev.mcservdemon.McServDemon;
-import es.anescdev.mcservdemon.context.jarversion.domain.model.RJarVersion;
+import es.anescdev.mcservdemon.context.jarversion.domain.model.JarVersion;
 import es.anescdev.mcservdemon.app.versionspack.parser.IVersionPackParser;
 import es.anescdev.mcservdemon.app.versionspack.parser.RVersionPackEntry;
 import es.anescdev.mcservdemon.app.versionspack.parser.VersionPackParser;
@@ -17,8 +17,8 @@ import java.util.Optional;
 public class JarVersionAdapter implements JarVersionPort {
 
     private static JarVersionPort instance;
-    private final List<RJarVersion> versions;
-    private JarVersionAdapter(List<RJarVersion> versions){
+    private final List<JarVersion> versions;
+    private JarVersionAdapter(List<JarVersion> versions){
         this.versions = versions;
     }
 
@@ -33,7 +33,7 @@ public class JarVersionAdapter implements JarVersionPort {
                 }
             }
             File[] packs = vpfDir.listFiles(File::isDirectory);
-            List<RJarVersion> tempVersions = new ArrayList<>();
+            List<JarVersion> tempVersions = new ArrayList<>();
             assert packs != null;
             for(File pack: packs){
                 File jarsDir = Path.of(pack.getAbsolutePath(),"jars").toFile();
@@ -43,36 +43,45 @@ public class JarVersionAdapter implements JarVersionPort {
                         rVersionPackEntries ->
                                 tempVersions.addAll(rVersionPackEntries.stream().map(
                                         (actEntry) ->
-                                                new RJarVersion(actEntry.tag(),
+                                                new JarVersion(actEntry.tag(),
                                                         actEntry.version(),
                                                         new File(jarsDir, actEntry.serverJar())))
                                         .toList()));
             }
             JarVersionAdapter.instance = new JarVersionAdapter(tempVersions);
+            JarVersionAdapter adapter = (JarVersionAdapter)instance;
+            for (JarVersion jarVersion : instance.findAll().list()) {
+                if(!adapter.hasVersion(jarVersion))
+                    instance.delete(jarVersion);
+            }
         }
         return JarVersionAdapter.instance;
     }
 
     @Override
-    public List<RJarVersion> getJarVersions() {
+    public List<JarVersion> getJarVersions() {
         return this.versions.stream().toList();
     }
 
     @Override
-    public List<RJarVersion> getJarVersionsByTag(String tag) {
-        return this.versions.stream().filter(rJarVersion -> rJarVersion.tag().contains(tag)).toList();
+    public List<JarVersion> getJarVersionsByTag(String tag) {
+        return this.versions.stream().filter(rJarVersion -> rJarVersion.getTag().contains(tag)).toList();
     }
 
     @Override
-    public List<RJarVersion> getJarVersionsByVersion(String version) {
-        return this.versions.stream().filter(rJarVersion -> rJarVersion.version().equals(version)).toList();
+    public List<JarVersion> getJarVersionsByVersion(String version) {
+        return this.versions.stream().filter(rJarVersion -> rJarVersion.getVersion().equals(version)).toList();
     }
 
     @Override
-    public List<RJarVersion> getJarVersions(String tag, String version) {
+    public List<JarVersion> getJarVersions(String tag, String version) {
         return this.versions.stream().filter(
                 rJarVersion ->
-                        rJarVersion.version().equals(version) && rJarVersion.tag().contains(tag))
+                        rJarVersion.getVersion().equals(version) && rJarVersion.getTag().contains(tag))
                 .toList();
+    }
+    
+    protected boolean hasVersion(JarVersion version){
+        return this.versions.contains(version);
     }
 }

@@ -6,7 +6,10 @@ import es.anescdev.mcservdemon.context.jarversion.adapter.JarVersionAdapter;
 import es.anescdev.mcservdemon.context.jarversion.domain.port.JarVersionPort;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
@@ -28,25 +31,25 @@ public class JarVersionResource {
             resContent = jarVersionPort.getJarVersions(params.getTag(), params.getVersion())
                     .stream()
                     .map(rJarVersion ->
-                            new JarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
+                            new JarVersionDTO(rJarVersion.getTag(), rJarVersion.getVersion()))
                     .toList();
         else if(params.getVersion() != null)
             resContent = jarVersionPort.getJarVersionsByVersion(params.getVersion())
                     .stream()
                     .map(rJarVersion ->
-                            new JarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
+                            new JarVersionDTO(rJarVersion.getTag(), rJarVersion.getVersion()))
                     .toList();
         else if(params.getTag() != null)
             resContent = jarVersionPort.getJarVersionsByTag(params.getTag())
                     .stream()
                     .map(rJarVersion ->
-                            new JarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
+                            new JarVersionDTO(rJarVersion.getTag(), rJarVersion.getVersion()))
                     .toList();
         else
             resContent =  jarVersionPort.getJarVersions()
                     .stream()
                     .map(rJarVersion ->
-                            new JarVersionDTO(rJarVersion.tag(), rJarVersion.version()))
+                            new JarVersionDTO(rJarVersion.getTag(), rJarVersion.getVersion()))
                     .toList();
         if(resContent.isEmpty())
             return Response.status(404).build();
