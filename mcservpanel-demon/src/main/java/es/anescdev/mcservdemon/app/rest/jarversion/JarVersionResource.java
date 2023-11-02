@@ -2,7 +2,6 @@ package es.anescdev.mcservdemon.app.rest.jarversion;
 
 import es.anescdev.mcservdemon.app.rest.validation.Validator;
 import es.anescdev.mcservdemon.app.rest.jarversion.dto.JarVersionDTO;
-import es.anescdev.mcservdemon.context.jarversion.adapter.JarVersionAdapter;
 import es.anescdev.mcservdemon.context.jarversion.domain.port.JarVersionPort;
 
 import jakarta.inject.Inject;
