@@ -2,8 +2,8 @@ package es.anescdev.mcservdemon.context.jarversion.domain.model;
 
 import java.io.File;
 
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +13,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class JarVersion {
-    private @Id String tag;
-    private String version;
+    private @EmbeddedId JarVersionPK id;
     private File jar;
+    
     @Override
     public boolean equals(Object obj){
-        return obj instanceof JarVersion && this.getTag() == ((JarVersion) obj).getTag();
+        if(obj instanceof JarVersion)
+            return false;
+        JarVersion otherJarVersion = (JarVersion) obj;
+        return this.getId().getTag() == otherJarVersion.getId().getTag() && this.getId().getVersion() == otherJarVersion.getId().getVersion();
     }
 }

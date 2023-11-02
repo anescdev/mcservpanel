@@ -2,6 +2,7 @@ package es.anescdev.mcservdemon.context.jarversion.adapter;
 
 import es.anescdev.mcservdemon.McServDemon;
 import es.anescdev.mcservdemon.context.jarversion.domain.model.JarVersion;
+import es.anescdev.mcservdemon.context.jarversion.domain.model.JarVersionPK;
 import es.anescdev.mcservdemon.app.versionspack.parser.IVersionPackParser;
 import es.anescdev.mcservdemon.app.versionspack.parser.RVersionPackEntry;
 import es.anescdev.mcservdemon.app.versionspack.parser.VersionPackParser;
@@ -15,13 +16,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class JarVersionAdapter implements JarVersionPort {
-
     private static JarVersionPort instance;
     private final List<JarVersion> versions;
     private JarVersionAdapter(List<JarVersion> versions){
         this.versions = versions;
     }
-
     public static JarVersionPort getInstance(){
         if(JarVersionAdapter.instance == null){
             IVersionPackParser parser = new VersionPackParser();
@@ -43,17 +42,17 @@ public class JarVersionAdapter implements JarVersionPort {
                         rVersionPackEntries ->
                                 tempVersions.addAll(rVersionPackEntries.stream().map(
                                         (actEntry) ->
-                                                new JarVersion(actEntry.tag(),
-                                                        actEntry.version(),
+                                                new JarVersion(new JarVersionPK(actEntry.tag(),
+                                                        actEntry.version()),
                                                         new File(jarsDir, actEntry.serverJar())))
                                         .toList()));
             }
             JarVersionAdapter.instance = new JarVersionAdapter(tempVersions);
-            JarVersionAdapter adapter = (JarVersionAdapter)instance;
             for (JarVersion jarVersion : instance.findAll().list()) {
-                if(!adapter.hasVersion(jarVersion))
+                if(!tempVersions.contains(jarVersion))
                     instance.delete(jarVersion);
             }
+            instance.persist(tempVersions);
         }
         return JarVersionAdapter.instance;
     }
@@ -65,23 +64,19 @@ public class JarVersionAdapter implements JarVersionPort {
 
     @Override
     public List<JarVersion> getJarVersionsByTag(String tag) {
-        return this.versions.stream().filter(rJarVersion -> rJarVersion.getTag().contains(tag)).toList();
+        return this.versions.stream().filter(rJarVersion -> rJarVersion.getId().getTag().contains(tag)).toList();
     }
 
     @Override
     public List<JarVersion> getJarVersionsByVersion(String version) {
-        return this.versions.stream().filter(rJarVersion -> rJarVersion.getVersion().equals(version)).toList();
+        return this.versions.stream().filter(rJarVersion -> rJarVersion.getId().getVersion().equals(version)).toList();
     }
 
     @Override
     public List<JarVersion> getJarVersions(String tag, String version) {
         return this.versions.stream().filter(
                 rJarVersion ->
-                        rJarVersion.getVersion().equals(version) && rJarVersion.getTag().contains(tag))
+                        rJarVersion.getId().getVersion().equals(version) && rJarVersion.getId().getTag().contains(tag))
                 .toList();
-    }
-    
-    protected boolean hasVersion(JarVersion version){
-        return this.versions.contains(version);
     }
 }
