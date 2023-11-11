@@ -15,12 +15,12 @@ public class VersionPackTest {
         String command = "link \"test.jar\" version 1.20.3 name \"juan\"";
         Matcher matcher = this.commandPattern.matcher(command);
         Assertions.assertTrue(matcher.matches());
-        String jarFile = matcher.group(1);
-        String version = matcher.group(2);
-        String tag = matcher.group(matcher.groupCount() > 3 ? 4 : 3);
-        System.out.println(jarFile.substring(jarFile.indexOf("\"")+1,jarFile.lastIndexOf("\"")));
-        System.out.println(version.split(" ")[1]);
-        System.out.println(tag.substring(tag.indexOf("\"")+1,tag.lastIndexOf("\"")));
+        // String jarFile = matcher.group(1);
+        // String version = matcher.group(2);
+        // String tag = matcher.group(matcher.groupCount() > 3 ? 4 : 3);
+        // System.out.println(jarFile.substring(jarFile.indexOf("\"")+1,jarFile.lastIndexOf("\"")));
+        // System.out.println(version.split(" ")[1]);
+        // System.out.println(tag.substring(tag.indexOf("\"")+1,tag.lastIndexOf("\"")));
     }
 
 }

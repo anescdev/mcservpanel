@@ -2,8 +2,11 @@ package es.anescdev.mcservdemon.context.jarversion.domain.model;
 
 import java.io.File;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class JarVersion {
     private @EmbeddedId JarVersionPK id;
+    @JsonIgnore
     private File jar;
     
     @Override

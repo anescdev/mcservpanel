@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 public class McServDemon implements QuarkusApplication{
     public static final Path BASE_DIR = Paths.get(System.getProperty("user.home"), ".mcservdemon");
     public static final File CONFIG_FILE = new File(BASE_DIR.toFile(),"config.properties");
+    public static final Path SERVER_DATA = Paths.get(BASE_DIR.toString(), "server_data");
 
     @Override
     public int run(String... args) {

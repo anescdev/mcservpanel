@@ -21,8 +21,6 @@ public class JarVersionValidator implements Validator<JarVersionDTO> {
             errorDTOList.add(new ErrorDTO("The version format is invalid", "version"));
         if(object.getTag() != null && object.getTag().isBlank())
             errorDTOList.add(new ErrorDTO("The tag is blank", "tag"));
-        if(!errorDTOList.isEmpty())
-            return Optional.of(Response.status(400).entity(errorDTOList).build());
-        return Optional.empty();
+        return Validator.prepareResponse(errorDTOList);
     }
 }

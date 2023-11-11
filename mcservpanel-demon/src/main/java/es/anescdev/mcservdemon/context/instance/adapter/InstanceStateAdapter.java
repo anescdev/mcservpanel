@@ -5,6 +5,7 @@ import es.anescdev.mcservdemon.context.instance.domain.model.RunningInstance;
 import es.anescdev.mcservdemon.context.instance.domain.port.InstanceStatePort;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -23,12 +24,20 @@ public class InstanceStateAdapter implements InstanceStatePort {
     }
 
     @Override
-    public void restartInstance(RunningInstance instance) {
-
+    public boolean restartInstance(RunningInstance instance) {
+        return this.sendCommand(instance, "restart");
     }
 
     @Override
-    public void stopInstance(RunningInstance instance) {
-
+    public boolean stopInstance(RunningInstance instance) {
+        return this.sendCommand(instance, "stop");
+    }
+    private boolean sendCommand(RunningInstance instance, String command){
+        try(DataOutputStream serverCli = new DataOutputStream(instance.getRunningProcess().getOutputStream())){
+            serverCli.writeBytes(command);
+            return serverCli.size() == command.length();
+        } catch(IOException e){
+            return false;
+        }
     }
 }

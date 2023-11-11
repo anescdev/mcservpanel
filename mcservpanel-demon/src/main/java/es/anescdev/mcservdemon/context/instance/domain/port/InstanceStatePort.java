@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface InstanceStatePort {
     Optional<RunningInstance> startInstance(Instance instance);
-    void restartInstance(RunningInstance instance);
-    void stopInstance(RunningInstance instance);
+    boolean restartInstance(RunningInstance instance);
+    boolean stopInstance(RunningInstance instance);
 }
